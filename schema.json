@@ -1,0 +1,152 @@
+{
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "default": {},
+    "title": "NBA igrači",
+    "description": "Skup NBA igrača za kolegij Otvoreno Računarstvo",
+    "required": [
+        "Ime",
+        "Tim",
+        "Tezina",
+        "Visina",
+        "Prezime",
+        "Pozicija",
+        "Broj dresa",
+        "Datum rođenja",
+        "Poeni po utakmici"
+    ],
+    "properties": {
+        "Ime": {
+            "type": "string",
+            "default": "",
+            "title": "The Ime Schema",
+            "examples": [
+                "LeBron"
+            ]
+        },
+        "Tim": {
+            "type": "object",
+            "default": {},
+            "title": "The Tim Schema",
+            "required": [
+                "Grad",
+                "Porazi",
+                "Pobjede",
+                "Naziv tima"
+            ],
+            "properties": {
+                "Grad": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The Grad Schema",
+                    "examples": [
+                        "Los Angeles"
+                    ]
+                },
+                "Porazi": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The Porazi Schema",
+                    "examples": [
+                        27
+                    ]
+                },
+                "Pobjede": {
+                    "type": "integer",
+                    "default": 0,
+                    "title": "The Pobjede Schema",
+                    "examples": [
+                        55
+                    ]
+                },
+                "Naziv tima": {
+                    "type": "string",
+                    "default": "",
+                    "title": "The Naziv tima Schema",
+                    "examples": [
+                        "Lakers"
+                    ]
+                }
+            },
+            "examples": [{
+                "Grad": "Los Angeles",
+                "Porazi": 27,
+                "Pobjede": 55,
+                "Naziv tima": "Lakers"
+            }]
+        },
+        "Tezina": {
+            "type": "integer",
+            "default": 0,
+            "title": "The Tezina Schema",
+            "examples": [
+                113
+            ]
+        },
+        "Visina": {
+            "type": "integer",
+            "default": 0,
+            "title": "The Visina Schema",
+            "examples": [
+                206
+            ]
+        },
+        "Prezime": {
+            "type": "string",
+            "default": "",
+            "title": "The Prezime Schema",
+            "examples": [
+                "James"
+            ]
+        },
+        "Pozicija": {
+            "type": "string",
+            "default": "",
+            "title": "The Pozicija Schema",
+            "examples": [
+                "SF"
+            ]
+        },
+        "Broj dresa": {
+            "type": "integer",
+            "default": 0,
+            "title": "The Broj dresa Schema",
+            "examples": [
+                6
+            ]
+        },
+        "Datum rođenja": {
+            "type": "string",
+            "default": "",
+            "title": "The Datum rođenja Schema",
+            "examples": [
+                "1984-12-30"
+            ]
+        },
+        "Poeni po utakmici": {
+            "type": "number",
+            "default": 0.0,
+            "title": "The Poeni po utakmici Schema",
+            "examples": [
+                25.00
+            ]
+        }
+    },
+    "examples": [{
+        "Ime": "LeBron",
+        "Tim": {
+            "Grad": "Los Angeles",
+            "Porazi": 27,
+            "Pobjede": 55,
+            "Naziv tima": "Lakers"
+        },
+        "Tezina": 113,
+        "Visina": 206,
+        "Prezime": "James",
+        "Pozicija": "SF",
+        "Broj dresa": 6,
+        "Datum rođenja": "1984-12-30",
+        "Poeni po utakmici": 25.00
+    }]
+}
