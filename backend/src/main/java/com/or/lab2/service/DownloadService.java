@@ -13,14 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.StringWriter;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.isAlphaSpace;
-import static org.apache.commons.lang3.StringUtils.isNumeric;
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -76,6 +73,8 @@ public class DownloadService {
 
     private List<PlayerTeamDTO> getPlayers(String searchText, String attribute) {
         List<Player> players;
+        searchText = searchText != null ? searchText.trim() : null;
+
 
         if (attribute == null && searchText == null) {
             players = playerRepository.findAll();
@@ -86,17 +85,21 @@ public class DownloadService {
                     case "tezina" -> playerRepository.findAllByWeight(Integer.parseInt(searchText));
                     case "brojdresa" -> playerRepository.findAllByJerseyNumber(Integer.parseInt(searchText));
                     case "poenipoutakmici" -> playerRepository.findAllByPointsPerGame(Double.parseDouble(searchText));
+                    case "pobjede" -> playerRepository.findAllByWins(Integer.parseInt(searchText));
+                    case "porazi" -> playerRepository.findAllByLosses(Integer.parseInt(searchText));
                     default -> throw new IllegalArgumentException("Invalid attribute");
                 };
             } else {
-                players = playerRepository.findByAllNumber(searchText);
+                players = playerRepository.findByAllNumber(Integer.parseInt(searchText));
             }
-        } else if (isAlphaSpace(searchText)) {
+        } else if (isAlpha(searchText)) {
             if (attribute != null && !attribute.isBlank() && !attribute.isEmpty()) {
                 players = switch (attribute) {
                     case "ime" -> playerRepository.findAllByFirstName(searchText);
                     case "prezime" -> playerRepository.findAllByLastName(searchText);
                     case "pozicija" -> playerRepository.findAllByPosition(searchText);
+                    case "grad" -> playerRepository.findAllByCity(searchText);
+                    case "nazivtima" -> playerRepository.findAllByTeamName(searchText);
                     default -> throw new IllegalArgumentException("Invalid attribute");
                 };
             } else {
@@ -104,8 +107,7 @@ public class DownloadService {
             }
         } else if (isDate(searchText)) {
             LocalDate localDate = LocalDate.parse(searchText, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            players = playerRepository.findAllByDateOfBirth(date);
+            players = playerRepository.findAllByDateOfBirth(localDate);
         } else {
             throw new IllegalArgumentException("Invalid search text");
         }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -18,13 +18,27 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
     List<Player> findAllByPointsPerGame(Double poenipoutakmici);
     List<Player> findAllByFirstName(String ime);
     List<Player> findAllByLastName(String prezime);
-    List<Player> findAllByDateOfBirth(Date datumrodjenja);
+    List<Player> findAllByDateOfBirth(LocalDate datumrodjenja);
     List<Player> findAllByPosition(String pozicija);
 
+    @Query(value = "SELECT * FROM igraci NATURAL JOIN timovi WHERE pobjede = %:searchText%", nativeQuery = true)
+    List<Player> findAllByWins(@Param("searchText") Integer searchText);
 
-    @Query(value = "SELECT * FROM igraci WHERE visina LIKE %:searchText% OR tezina LIKE %:searchText% OR brojdresa LIKE %:searchText% OR poenipoutakmici LIKE %:searchText%", nativeQuery = true)
-    List<Player> findByAllNumber(@Param("searchText") String searchText);
+    @Query(value = "SELECT * FROM igraci NATURAL JOIN timovi WHERE porazi = %:searchText%", nativeQuery = true)
+    List<Player> findAllByLosses(@Param("searchText") Integer searchText);
 
-    @Query(value = "SELECT * FROM igraci WHERE ime LIKE %:searchText% OR prezime LIKE %:searchText% OR pozicija LIKE %:searchText%", nativeQuery = true)
+    @Query(value = "SELECT * FROM igraci NATURAL JOIN timovi WHERE grad LIKE %:searchText%", nativeQuery = true)
+    List<Player> findAllByCity(@Param("searchText")String searchText);
+
+    @Query(value = "SELECT * FROM igraci NATURAL JOIN timovi WHERE nazivtima LIKE %:searchText%", nativeQuery = true)
+    List<Player> findAllByTeamName(@Param("searchText") String searchText);
+
+    @Query(value = "SELECT * FROM igraci NATURAL JOIN timovi WHERE visina = %:searchText% OR tezina = %:searchText% OR brojdresa = %:searchText% OR poenipoutakmici = %:searchText% OR porazi = %:searchText% OR pobjede = %:searchText%", nativeQuery = true)
+    List<Player> findByAllNumber(@Param("searchText") Integer searchText);
+
+    @Query(value = "SELECT * FROM igraci NATURAL JOIN timovi WHERE ime LIKE %:searchText% OR prezime LIKE %:searchText% OR pozicija LIKE %:searchText% OR nazivtima LIKE %:searchText% OR grad LIKE %:searchText%", nativeQuery = true)
     List<Player> findAllByAlpha(@Param("searchText") String searchText);
+
+
+
 }

@@ -7,13 +7,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.isAlpha;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +23,7 @@ public class PlayerService {
 
     public List<PlayerTeamDTO> getAllPlayers(String searchText, String attribute) {
 
+        searchText = searchText != null ? searchText.trim() : null;
         List<Player> players;
 
         if((attribute == null || attribute.isEmpty() || attribute.isBlank()) &&
@@ -36,10 +36,12 @@ public class PlayerService {
                     case "tezina" -> playerRepository.findAllByWeight(Integer.parseInt(searchText));
                     case "brojdresa" -> playerRepository.findAllByJerseyNumber(Integer.parseInt(searchText));
                     case "poenipoutakmici" -> playerRepository.findAllByPointsPerGame(Double.parseDouble(searchText));
+                    case "pobjede" -> playerRepository.findAllByWins(Integer.parseInt(searchText));
+                    case "porazi" -> playerRepository.findAllByLosses(Integer.parseInt(searchText));
                     default -> throw new IllegalArgumentException("Invalid attribute");
                 };
             } else {
-                players = playerRepository.findByAllNumber(searchText);
+                players = playerRepository.findByAllNumber(Integer.parseInt(searchText));
             }
         } else if(isAlpha(searchText)) {
             if (attribute != null && !attribute.isBlank() && !attribute.isEmpty()) {
@@ -47,6 +49,8 @@ public class PlayerService {
                     case "ime" -> playerRepository.findAllByFirstName(searchText);
                     case "prezime" -> playerRepository.findAllByLastName(searchText);
                     case "pozicija" -> playerRepository.findAllByPosition(searchText);
+                    case "grad" -> playerRepository.findAllByCity(searchText);
+                    case "nazivtima" -> playerRepository.findAllByTeamName(searchText);
                     default -> throw new IllegalArgumentException("Invalid attribute");
                 };
             } else {
@@ -54,8 +58,7 @@ public class PlayerService {
             }
         } else if(isDate(searchText)) {
             LocalDate localDate = LocalDate.parse(searchText, DateTimeFormatter.ofPattern("dd.MM.yyyy"));
-            Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            players = playerRepository.findAllByDateOfBirth(date);
+            players = playerRepository.findAllByDateOfBirth(localDate);
         } else{
             throw new IllegalArgumentException("Invalid search text");
         }
