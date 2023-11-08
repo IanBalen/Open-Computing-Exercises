@@ -79,7 +79,7 @@ public class DownloadService {
         if (attribute == null && searchText == null) {
             players = playerRepository.findAll();
         } else if (isNumeric(searchText) || isDouble(searchText)) {
-            if (attribute != null) {
+            if (attribute != null && !attribute.isBlank() && !attribute.isEmpty()) {
                 players = switch (attribute) {
                     case "visina" -> playerRepository.findAllByHeight(Integer.parseInt(searchText));
                     case "tezina" -> playerRepository.findAllByWeight(Integer.parseInt(searchText));
@@ -91,7 +91,7 @@ public class DownloadService {
                 players = playerRepository.findByAllNumber(searchText);
             }
         } else if (isAlphaSpace(searchText)) {
-            if (attribute != null) {
+            if (attribute != null && !attribute.isBlank() && !attribute.isEmpty()) {
                 players = switch (attribute) {
                     case "ime" -> playerRepository.findAllByFirstName(searchText);
                     case "prezime" -> playerRepository.findAllByLastName(searchText);

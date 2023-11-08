@@ -20,6 +20,8 @@ public class PlayerController {
     @GetMapping
     public List<PlayerTeamDTO> getPlayers(@RequestParam(value = "searchText", required = false) String searchText,
                                           @RequestParam(value = "attribute", required = false) String attribute) {
+        System.out.println("searchText: " + searchText);
+        System.out.println("attribute: " + attribute);
         return playerService.getAllPlayers(searchText, attribute);
     }
 

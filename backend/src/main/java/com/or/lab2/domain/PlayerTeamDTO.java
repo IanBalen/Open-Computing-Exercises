@@ -24,7 +24,7 @@ public class PlayerTeamDTO {
     private Integer weight;
     @JsonProperty("brojdresa")
     private Integer jerseyNumber;
-    @JsonProperty("porenipoutakmici")
+    @JsonProperty("poenipoutakmici")
     private Double pointsPerGame;
     @JsonProperty("nazivtima")
     private String name;

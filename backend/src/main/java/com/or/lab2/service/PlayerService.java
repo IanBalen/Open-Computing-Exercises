@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.apache.commons.lang3.StringUtils.isAlphaSpace;
-import static org.apache.commons.lang3.StringUtils.isNumeric;
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +26,11 @@ public class PlayerService {
 
         List<Player> players;
 
-        if(attribute == null && searchText == null){
+        if((attribute == null || attribute.isEmpty() || attribute.isBlank()) &&
+           (searchText == null || searchText.isEmpty() || searchText.isBlank())){
             players = playerRepository.findAll();
         } else if(isNumeric(searchText) || isDouble(searchText)){
-            if(attribute != null){
+            if(attribute != null && !attribute.isBlank() && !attribute.isEmpty()){
                 players =  switch (attribute) {
                     case "visina" -> playerRepository.findAllByHeight(Integer.parseInt(searchText));
                     case "tezina" -> playerRepository.findAllByWeight(Integer.parseInt(searchText));
@@ -41,8 +41,8 @@ public class PlayerService {
             } else {
                 players = playerRepository.findByAllNumber(searchText);
             }
-        } else if(isAlphaSpace(searchText)) {
-            if (attribute != null) {
+        } else if(isAlpha(searchText)) {
+            if (attribute != null && !attribute.isBlank() && !attribute.isEmpty()) {
                 players = switch (attribute) {
                     case "ime" -> playerRepository.findAllByFirstName(searchText);
                     case "prezime" -> playerRepository.findAllByLastName(searchText);
