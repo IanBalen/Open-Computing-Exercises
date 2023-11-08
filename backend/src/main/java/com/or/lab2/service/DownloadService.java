@@ -76,7 +76,8 @@ public class DownloadService {
         searchText = searchText != null ? searchText.trim() : null;
 
 
-        if (attribute == null && searchText == null) {
+        if((attribute == null || attribute.isEmpty() || attribute.isBlank()) &&
+           (searchText == null || searchText.isEmpty() || searchText.isBlank())){
             players = playerRepository.findAll();
         } else if (isNumeric(searchText) || isDouble(searchText)) {
             if (attribute != null && !attribute.isBlank() && !attribute.isEmpty()) {
