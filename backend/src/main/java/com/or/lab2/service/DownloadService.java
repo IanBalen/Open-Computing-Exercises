@@ -28,7 +28,8 @@ public class DownloadService {
 
     private final PlayerRepository playerRepository;
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .enable(SerializationFeature.INDENT_OUTPUT);
 
 
     @SneakyThrows
