@@ -1,12 +1,17 @@
-// In App.js
+// App.js
 import React from 'react';
-import MyComponent from './MyComponent'; // The path should be relative to where you saved MyComponent.js
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Database from './Database';
+import IndexPage from './IndexPage';
 
 function App() {
   return (
-    <div className="App">
-      <MyComponent />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/database" element={<Database />} />
+        <Route path="/" element={<IndexPage />} />
+      </Routes>
+    </Router>
   );
 }
 
