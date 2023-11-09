@@ -74,14 +74,14 @@ const downloadFile = async (fileType, searchText, attribute) => {
     <div className="container">
       <Link to="/">Back to Home</Link>
       <input
+        id="pretraga"
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         placeholder={showDateFormat ? "dd.MM.yyyy" : ""}
       />
-      <select value={dropdownValue} onChange={handleDropdownChange}>
-        <option value="">Odaberite polja za pretragu</option>
-        <option value="">Sva pola(wildcard)</option>
+      <select id="atribut" value={dropdownValue} onChange={handleDropdownChange}>
+        <option value="">Sva polja (wildcard)</option>
         <option value="ime">Ime</option>
         <option value="prezime">Prezime</option>
         <option value="pozicija">Pozicija</option>
@@ -100,10 +100,10 @@ const downloadFile = async (fileType, searchText, attribute) => {
           Please enter the date in the format: dd.MM.yyyy
         </p>
       )}
-      <button type="button" onClick={() => fetchData(inputValue, dropdownValue)}>Filter</button>
+      <button id="gumb" type="button" onClick={() => fetchData(inputValue, dropdownValue)}>Filter</button>
       <button onClick={() => downloadFile('json', inputValue, dropdownValue)}>Download JSON</button>
       <button onClick={() => downloadFile('csv', inputValue, dropdownValue)}>Download CSV</button>
-      <table>
+      <table id="tablica">
       <thead>
           <tr>
             <th>Ime</th>
