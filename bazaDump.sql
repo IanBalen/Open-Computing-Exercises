@@ -5,7 +5,7 @@
 -- Dumped from database version 15.2
 -- Dumped by pg_dump version 15.2
 
--- Started on 2023-11-08 09:44:37
+-- Started on 2023-11-09 08:53:02
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -220,7 +220,7 @@ ALTER TABLE ONLY public.igraci
     ADD CONSTRAINT fk7lxuo05x395kikil1038rri3g FOREIGN KEY (timid) REFERENCES public.timovi(timid);
 
 
--- Completed on 2023-11-08 09:44:37
+-- Completed on 2023-11-09 08:53:03
 
 --
 -- PostgreSQL database dump complete
