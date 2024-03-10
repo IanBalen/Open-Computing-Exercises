@@ -1,0 +1,1 @@
+docker exec -u postgres mojaBazaSpremnik psql -d OR -c "\COPY (SELECT timovi.nazivtima, igraci.ime, igraci.prezime, igraci.pozicija, igraci.datumrodjenja, igraci.visina, igraci.tezina, igraci.brojdresa, igraci.poenipoutakmici FROM igraci JOIN timovi ON igraci.timid = timovi.timid) TO STDOUT CSV HEADER" > novi_csv.csv
