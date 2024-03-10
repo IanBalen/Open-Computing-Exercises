@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  frontend:
+    image: 'ianbalen/orbaza:frontend'
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+    - orbaza-network
+
+  backend:
+    image: 'ianbalen/orbaza:backend'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/OR
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Krokodilcek6
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - orbaza-network
+
+  postgresql:
+    image: 'ianbalen/orbaza:baza'
+    container_name: mojaBazaSpremnikLab2
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_PASSWORD=Krokodilcek6
+      - POSTGRES_USER=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orbaza-network
+
+networks:
+  orbaza-network:
+    driver: bridge
